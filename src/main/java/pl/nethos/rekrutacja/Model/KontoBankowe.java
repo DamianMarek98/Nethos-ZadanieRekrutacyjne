@@ -57,6 +57,17 @@ public class KontoBankowe {
         return numer;
     }
 
+    public String getFormattedNumer(){
+        String numer = getNumer();
+        StringBuilder formattedNumber = new StringBuilder();
+        for(int i=0; i<numer.length(); i++){
+            if(i==2 || i%4 == 0)
+                formattedNumber.append(" ");
+            formattedNumber.append(numer.charAt(i));
+        }
+        return formattedNumber.toString();
+    }
+
     public void setNumer(String numer) {
         this.numer = numer;
     }
@@ -65,8 +76,20 @@ public class KontoBankowe {
         return aktywne;
     }
 
+    public String getFormattedAktywne(){
+        if(getAktywne())
+            return "tak";
+        return "nie";
+    }
+
     public void setAktywne(Boolean aktywne) {
         this.aktywne = aktywne;
+    }
+
+    public String getFormattedDomyslne(){
+        if(getDomyslne())
+            return "tak";
+        return "nie";
     }
 
     public Boolean getDomyslne() {
@@ -81,12 +104,26 @@ public class KontoBankowe {
         return wirtualne;
     }
 
+    public String getFormattedWirtualne(){
+        if(getWirtualne())
+            return "tak";
+        return "nie";
+    }
+
     public void setWirtualne(Boolean wirtualne) {
         this.wirtualne = wirtualne;
     }
 
     public Boolean getStan_weryfikacji() {
         return stan_weryfikacji;
+    }
+
+    public String getFormattedStanWeryfikacji(){
+        if(stan_weryfikacji == null)
+            return "nie weryfikowano";
+        if(getStan_weryfikacji())
+            return "zweryfikowny!";
+        return "nieudana weryfikacja"; //to check if this string fits meaning
     }
 
     public void setStan_weryfikacji(Boolean stan_weryfikacji) {
