@@ -13,4 +13,5 @@ import java.util.List;
 public interface KontoBankoweRepository extends CrudRepository<KontoBankowe, Long> {
     @Query(nativeQuery = true, value = "SELECT * FROM KONTO_BANKOWE")
     List<KontoBankowe> getAllKontoBankowe();
+
 }

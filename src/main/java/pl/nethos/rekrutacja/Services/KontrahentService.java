@@ -1,17 +1,19 @@
 package pl.nethos.rekrutacja.Services;
 
 
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.nethos.rekrutacja.Model.Kontrahent;
 import pl.nethos.rekrutacja.Repository.KontrahentRepository;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class KontrahentService {
-
+public class KontrahentService{
+    private EntityManager entityManager;
     private KontrahentRepository kontrahentRepository;
 
     @Autowired
@@ -26,6 +28,7 @@ public class KontrahentService {
     public Iterable<Kontrahent> findAll() {
         return kontrahentRepository.findAll();
     }
+
 
 
 }

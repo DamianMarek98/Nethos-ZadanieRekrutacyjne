@@ -4,12 +4,13 @@ package pl.nethos.rekrutacja.Model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Data
 @Entity
 @Table(name = "KONTO_BANKOWE")
-public class KontoBankowe {
+public class KontoBankowe  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -120,14 +121,22 @@ public class KontoBankowe {
 
     public String getFormattedStanWeryfikacji(){
         if(stan_weryfikacji == null)
-            return "nie weryfikowano";
+            return "nieokreślony";
         if(getStan_weryfikacji())
-            return "zweryfikowny!";
-        return "nieudana weryfikacja"; //to check if this string fits meaning
+            return "zweryfikowny";
+        return "błędne konto"; //to check if this string fits meaning
     }
 
     public void setStan_weryfikacji(Boolean stan_weryfikacji) {
         this.stan_weryfikacji = stan_weryfikacji;
+    }
+
+    public String getDataWeryfikacjiAsString(){
+        if(data_weryfikacji == null){
+            return "nie weryfikowano";
+        }
+        SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yy HH:mm");
+        return "Zweryfikowno: "+DATE_FORMAT.format(data_weryfikacji);
     }
 
     public Date getData_weryfikacji() {
