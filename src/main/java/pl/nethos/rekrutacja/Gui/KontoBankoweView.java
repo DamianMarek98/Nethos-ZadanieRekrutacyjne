@@ -75,6 +75,7 @@ public class KontoBankoweView extends VerticalLayout implements HasUrlParameter<
                 .setHeader("Stan weryfikacji").setAutoWidth(true);
         kontoBankoweGrid.setSelectionMode(Grid.SelectionMode.NONE); //grid  rows are not selectable
         kontoBankoweGrid.setHeightByRows(true);
+        kontoBankoweGrid.setVisible(true);
     }
 
     private List<KontoBankowe> fillGridWithKontaBankoweOnselectedKontrahentId() {
