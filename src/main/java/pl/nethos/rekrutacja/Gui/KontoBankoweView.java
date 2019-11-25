@@ -1,5 +1,6 @@
 package pl.nethos.rekrutacja.Gui;
 
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Label;
@@ -13,8 +14,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.nethos.rekrutacja.Model.KontoBankowe;
+import pl.nethos.rekrutacja.Model.Kontrahent;
 import pl.nethos.rekrutacja.Repository.KontoBankoweRepository;
 import pl.nethos.rekrutacja.Services.KontoBankoweService;
+import pl.nethos.rekrutacja.Services.KontrahentService;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,6 +28,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Route(value = "konta")
 @CssImport(value = "./styles/styles.css")
@@ -32,14 +36,17 @@ public class KontoBankoweView extends VerticalLayout implements HasUrlParameter<
 
     private KontoBankoweRepository kontoBankoweRepository;
     private KontoBankoweService kontoBankoweService;
+    private KontrahentService kontrahentService;
     private Long selectedKontrahentId;
     private Grid<KontoBankowe> kontoBankoweGrid;
     private Label title;
     private Label error;
 
 
-    public KontoBankoweView(@Autowired KontoBankoweRepository kontoBankoweRepository, @Autowired KontoBankoweService kontoBankoweService) {
+    public KontoBankoweView(@Autowired KontoBankoweRepository kontoBankoweRepository,
+                            @Autowired KontoBankoweService kontoBankoweService, @Autowired KontrahentService kontrahentService) {
         this.kontoBankoweGrid = new Grid<>();
+        this.kontrahentService = kontrahentService;
         this.kontoBankoweRepository = kontoBankoweRepository;
         this.kontoBankoweService = kontoBankoweService;
         this.title = new Label("");
@@ -91,8 +98,15 @@ public class KontoBankoweView extends VerticalLayout implements HasUrlParameter<
     public void setParameter(BeforeEvent event,
                              String parameter) {
         setselectedKontrahentId(Long.parseLong(parameter.substring(3)));
+        changeRoutingIfKontrahentWithParameterIdExists(selectedKontrahentId);
         prepareKontoBakoweGrid();
         add(kontoBankoweGrid);
+    }
+
+    private void changeRoutingIfKontrahentWithParameterIdExists(Long id){
+        if(!kontrahentService.checkIfUserOfGivenIdExists(id))
+            error.setText("User with id = "+id.toString()+" not existing!");
+            add(error);
     }
 
     private void checkStanWeryfikacji(KontoBankowe kontoBankowe) {

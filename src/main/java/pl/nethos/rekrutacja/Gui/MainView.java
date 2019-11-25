@@ -47,7 +47,8 @@ public class MainView extends VerticalLayout {
         kontrahentGrid.setSelectionMode(Grid.SelectionMode.SINGLE);
         kontrahentGrid.addSelectionListener(event -> {
             Optional<Kontrahent> selectedKontrahent = event.getFirstSelectedItem();
-            selectedKontrahentId = selectedKontrahent.get().getId();
+            if(selectedKontrahent.isPresent())
+                selectedKontrahentId = selectedKontrahent.get().getId();
             getUI().ifPresent(ui -> ui.navigate("konta" + "/id=" + selectedKontrahentId));
         });
         kontrahentGrid.setHeightByRows(true);
