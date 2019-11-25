@@ -75,7 +75,6 @@ public class KontoBankoweView extends VerticalLayout implements HasUrlParameter<
                 .setHeader("Stan weryfikacji").setAutoWidth(true);
         kontoBankoweGrid.setSelectionMode(Grid.SelectionMode.NONE); //grid  rows are not selectable
         kontoBankoweGrid.setHeightByRows(true);
-        kontoBankoweGrid.setVisible(true);
     }
 
     private List<KontoBankowe> fillGridWithKontaBankoweOnselectedKontrahentId() {
@@ -105,10 +104,13 @@ public class KontoBankoweView extends VerticalLayout implements HasUrlParameter<
     }
 
     private void changeRoutingIfKontrahentWithParameterIdExists(Long id){
-        if(!kontrahentService.checkIfUserOfGivenIdExists(id))
-            error.setText("User with id = "+id.toString()+" not existing!");
+        if(!kontrahentService.checkIfUserOfGivenIdExists(id)) {
+            error.setText("User with id = " + id.toString() + " not existing!");
             kontoBankoweGrid.setVisible(false);
             add(error);
+        }else{
+            kontoBankoweGrid.setVisible(true);
+        }
     }
 
     private void checkStanWeryfikacji(KontoBankowe kontoBankowe) {
