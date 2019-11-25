@@ -4,20 +4,22 @@ package pl.nethos.rekrutacja.Model;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Data
 @Entity
 @Table(name = "KONTO_BANKOWE")
-public class KontoBankowe  {
+public class KontoBankowe {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     Long id;
     @ManyToOne
-    @JoinColumn(name="id_kontrahent")
+    @JoinColumn(name = "id_kontrahent")
     Kontrahent kontrahent;
+    @Size(min=26, max=26, message="The field must contain 26 characters")
     String numer;
     Boolean aktywne;
     Boolean domyslne;
@@ -25,7 +27,10 @@ public class KontoBankowe  {
     Boolean stan_weryfikacji;
     Date data_weryfikacji;
 
-    public KontoBankowe(){};
+    public KontoBankowe() {
+    }
+
+    ;
 
     public KontoBankowe(Kontrahent kontrahent, String numer, Boolean aktywne, Boolean domyslne, Boolean wirtualne, Boolean stan_weryfikacji, Date data_weryfikacji) {
         this.kontrahent = kontrahent;
@@ -58,11 +63,11 @@ public class KontoBankowe  {
         return numer;
     }
 
-    public String getFormattedNumer(){
+    public String getFormattedNumer() {
         String numer = getNumer();
         StringBuilder formattedNumber = new StringBuilder();
-        for(int i=0; i<numer.length(); i++){
-            if(i==2 || i%4 == 0)
+        for (int i = 0; i < numer.length(); i++) {
+            if (i == 2 || i % 4 == 0)
                 formattedNumber.append(" ");
             formattedNumber.append(numer.charAt(i));
         }
@@ -77,8 +82,8 @@ public class KontoBankowe  {
         return aktywne;
     }
 
-    public String getFormattedAktywne(){
-        if(getAktywne())
+    public String getFormattedAktywne() {
+        if (getAktywne())
             return "tak";
         return "nie";
     }
@@ -87,8 +92,8 @@ public class KontoBankowe  {
         this.aktywne = aktywne;
     }
 
-    public String getFormattedDomyslne(){
-        if(getDomyslne())
+    public String getFormattedDomyslne() {
+        if (getDomyslne())
             return "tak";
         return "nie";
     }
@@ -105,8 +110,8 @@ public class KontoBankowe  {
         return wirtualne;
     }
 
-    public String getFormattedWirtualne(){
-        if(getWirtualne())
+    public String getFormattedWirtualne() {
+        if (getWirtualne())
             return "tak";
         return "nie";
     }
@@ -119,10 +124,10 @@ public class KontoBankowe  {
         return stan_weryfikacji;
     }
 
-    public String getFormattedStanWeryfikacji(){
-        if(stan_weryfikacji == null)
+    public String getFormattedStanWeryfikacji() {
+        if (stan_weryfikacji == null)
             return "nieokreślony";
-        if(getStan_weryfikacji())
+        if (getStan_weryfikacji())
             return "zweryfikowny";
         return "błędne konto"; //to check if this string fits meaning
     }
@@ -131,12 +136,12 @@ public class KontoBankowe  {
         this.stan_weryfikacji = stan_weryfikacji;
     }
 
-    public String getDataWeryfikacjiAsString(){
-        if(data_weryfikacji == null){
+    public String getDataWeryfikacjiAsString() {
+        if (data_weryfikacji == null) {
             return "nie weryfikowano";
         }
         SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MM-yy HH:mm");
-        return "Zweryfikowno: "+DATE_FORMAT.format(data_weryfikacji);
+        return "Zweryfikowno: " + DATE_FORMAT.format(data_weryfikacji);
     }
 
     public Date getData_weryfikacji() {
@@ -148,7 +153,7 @@ public class KontoBankowe  {
     }
 
     @Override
-    public String toString(){
-        return "Konto bankowe: id-"+id+", kontrahent-"+ kontrahent.nazwa +", numer-"+ numer;
+    public String toString() {
+        return "Konto bankowe: id-" + id + ", kontrahent-" + kontrahent.nazwa + ", numer-" + numer;
     }
 }

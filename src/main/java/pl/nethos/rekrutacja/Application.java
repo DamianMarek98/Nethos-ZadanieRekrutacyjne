@@ -1,12 +1,8 @@
 package pl.nethos.rekrutacja;
 
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
-import org.springframework.context.annotation.Bean;
-
-import javax.management.MXBean;
 
 @SpringBootApplication
 public class Application extends SpringBootServletInitializer {

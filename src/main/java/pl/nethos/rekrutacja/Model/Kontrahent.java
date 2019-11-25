@@ -1,8 +1,9 @@
 package pl.nethos.rekrutacja.Model;
 
-import javax.persistence.*;
-import lombok.*;
+import lombok.Data;
 
+import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -15,12 +16,15 @@ public class Kontrahent {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     Long id;
     String nazwa;
+    @Size(min=10, max=10, message="The field must contain 10 characters")
     String nip;
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(name="kontrahent_kontoBankowe_mapping", joinColumns = @JoinColumn(name="id_kontrahent"),inverseJoinColumns = @JoinColumn(name = "id_kontoBankowe"))
-    Collection<KontoBankowe> kontaBankowe=new ArrayList<>();
+    @JoinTable(name = "kontrahent_kontoBankowe_mapping", joinColumns = @JoinColumn(name = "id_kontrahent"), inverseJoinColumns = @JoinColumn(name = "id_kontoBankowe"))
+    Collection<KontoBankowe> kontaBankowe = new ArrayList<>();
 
-    public Kontrahent(){};
+    public Kontrahent() {
+    }
+
 
     public Kontrahent(String nazwa, String nip) {
         this.nazwa = nazwa;
@@ -60,7 +64,7 @@ public class Kontrahent {
     }
 
     @Override
-    public String toString(){
-        return "Kontrahent{" + "id: " + id + ", nazwa='" + nazwa +'\''+", nip=" +nip+'\''+'}';
+    public String toString() {
+        return "Kontrahent{" + "id: " + id + ", nazwa='" + nazwa + '\'' + ", nip=" + nip + '\'' + '}';
     }
 }
