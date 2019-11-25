@@ -106,6 +106,7 @@ public class KontoBankoweView extends VerticalLayout implements HasUrlParameter<
     private void changeRoutingIfKontrahentWithParameterIdExists(Long id){
         if(!kontrahentService.checkIfUserOfGivenIdExists(id))
             error.setText("User with id = "+id.toString()+" not existing!");
+            kontoBankoweGrid.setVisible(false);
             add(error);
     }
 
